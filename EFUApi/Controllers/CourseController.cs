@@ -1,3 +1,4 @@
+using System.Security.Permissions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -5,7 +6,7 @@ namespace EFUApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CourseController : ControllerBase
+public class CoursesController : ControllerBase
 {
     [HttpGet]
     public string GetCourses()
@@ -20,7 +21,7 @@ public class CourseController : ControllerBase
     }
 
     [HttpPost]
-    public string CreateCourse()
+    public string CreateCourse([FromBody]Course course)
     {
         return $"Creating a course";
     }

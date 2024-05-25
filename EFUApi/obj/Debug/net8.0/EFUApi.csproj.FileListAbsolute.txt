@@ -30,3 +30,4 @@
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.pdb
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.genruntimeconfig.cache
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/ref/EFUApi.dll
+/Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.sourcelink.json
