@@ -18,15 +18,11 @@ public class CoursesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Course_ValidateCourseIdFilter]
     public IActionResult GetCourseById(int id)
     {
-        if (id <= 0)
-        return BadRequest();
-
-        var course = CourseRepository.GetCourseById(id);
-        if (course == null)
-            return NotFound();
-        return Ok(course);
+        
+        return Ok(CourseRepository.GetCourseById(id));
     }
 
     [HttpPost]
