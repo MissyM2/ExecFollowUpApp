@@ -1,4 +1,5 @@
 using System.Security.Permissions;
+using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -8,13 +9,7 @@ namespace EFUApi.Controllers;
 [Route("api/[controller]")]
 public class CoursesController : ControllerBase
 {
-    private List<Course> courses = new List<Course>()
-    {
-        new Course {CourseId = 1, Code = "ENG101", Name = "English", Description = "Poetry from 1900"},
-        new Course {CourseId = 2, Code = "MATH101", Name = "Math", Description = "Calculus"},
-        new Course {CourseId = 3, Code = "PHIL101", Name = "Philosophy", Description = "Logic"},
-        new Course {CourseId = 4, Code = "PSYCH101", Name = "Psychology", Description = "Psychology of Women"}
-    };
+    
 
     [HttpGet]
     public string GetCourses()
@@ -27,8 +22,8 @@ public class CoursesController : ControllerBase
     {
         if (id <= 0)
         return BadRequest();
-        
-        var course = courses.FirstOrDefault(x => x.CourseId == id);
+
+        var course = CourseRepository.GetCourseById(id);
         if (course == null)
             return NotFound();
         return Ok(course);
