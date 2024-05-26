@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using EFUApi.Models.Validations;
 
 namespace EFUApi;
 
@@ -6,7 +7,7 @@ public class Course
 {
         public int CourseId { get; set; }
 
-        [Required]
+        [Course_EnsureCorrectCode]
         public string? Code { get; set; }
 
         [Required]

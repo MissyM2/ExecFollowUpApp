@@ -16,6 +16,7 @@
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.csproj.CoreCompileInputs.cache
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.MvcApplicationPartsAssemblyInfo.cs
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.MvcApplicationPartsAssemblyInfo.cache
+/Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.sourcelink.json
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/staticwebassets.build.json
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/staticwebassets.development.json
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/staticwebassets/msbuild.EFUApi.Microsoft.AspNetCore.StaticWebAssets.props
@@ -30,4 +31,3 @@
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.pdb
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.genruntimeconfig.cache
 /Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/ref/EFUApi.dll
-/Users/missymaloney/DevelopmentMyProjects/EFUApp/EFUApi/obj/Debug/net8.0/EFUApi.sourcelink.json
