@@ -1,8 +1,7 @@
-using System.Security.Permissions;
-using EFUApi.Filters;
+using EFUApi.Filters.ActionFilters;
+using EFUApi.Filters.ExceptionFilters;
 using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace EFUApi.Controllers;
 
@@ -40,23 +39,11 @@ public class CoursesController : ControllerBase
     [HttpPut("{id}")]
     [Course_ValidateCourseIdFilter]
     [Course_ValidateUpdateCourseFilter]
+    [Course_HandleUpdateExceptionsFilter]
     public IActionResult UpdateCourse(int id, Course course)
     {
-        // if course is deleted after the line above but before update, then use try/catch block
-        try
-        {
-            CourseRepository.UpdateCourse(course);
-
-        }
-        catch
-        {
-            if (!CourseRepository.CourseExists(id))
-                return NotFound();
-
-            // if it fails for any other reason, throw generic 500 error
-            throw;
-        }
-
+        CourseRepository.UpdateCourse(course);
+        
         return NoContent();
     }
 

@@ -2,7 +2,7 @@ using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace EFUApi.Filters;
+namespace EFUApi.Filters.ActionFilters;
 public class Course_ValidateCreateCourseFilterAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
