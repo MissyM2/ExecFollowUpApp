@@ -64,4 +64,13 @@ public static class CourseRepository
 
     }
 
+    public static void DeleteCourse(int courseId)
+    {
+      var course = GetCourseById(courseId);
+      if (course != null)
+      {
+        courses.Remove(course);
+      }
+    }
+
 }

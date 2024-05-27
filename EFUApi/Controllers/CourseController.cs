@@ -48,8 +48,15 @@ public class CoursesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public string DeleteCourse(int id)
+    [Course_ValidateCourseIdFilter]
+    public IActionResult DeleteCourse(int id)
     {
-        return $"Deleting course: {id}";
+        var course = CourseRepository.GetCourseById(id);
+
+        // right now, this is a HARD DELETE (removed from in-memory data store); however, usually, 
+        // a programmer wants to mark for deletion.. a SOFT DELETE
+        CourseRepository.DeleteCourse(id);
+
+        return Ok(course);
     }
 }
