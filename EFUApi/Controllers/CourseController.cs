@@ -12,9 +12,9 @@ public class CoursesController : ControllerBase
     
 
     [HttpGet]
-    public string GetCourses()
+    public IActionResult GetCourses()
     {
-        return "Reading all the courses";
+        return Ok(CourseRepository.GetCourses());
     }
 
     [HttpGet("{id}")]
@@ -26,9 +26,18 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPost]
-    public string CreateCourse([FromBody] Course course)
+    public IActionResult CreateCourse([FromBody] Course course)
     {
-        return $"Creating a course";
+        if (course == null) return BadRequest();
+
+        var existingCourse = CourseRepository.GetCourseByProperties(course.Code, course.CourseNum, course.Name, course.Description);
+        if (existingCourse != null) return BadRequest();
+
+        CourseRepository.AddCourse(course);
+
+        return CreatedAtAction(nameof(GetCourseById),
+            new {id = course.CourseId},
+            course);
     }
 
     [HttpPut("{id}")]

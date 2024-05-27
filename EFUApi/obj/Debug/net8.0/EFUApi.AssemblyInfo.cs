@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFUApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39a9de5c3ac1c865532f17522f02a4b6b70a221b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7231b8445159611789d3bb5745a924b2ffdfa231")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFUApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFUApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
