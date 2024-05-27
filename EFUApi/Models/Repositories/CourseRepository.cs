@@ -54,4 +54,14 @@ public static class CourseRepository
       courses.Add(course);
     }
 
+    public static void UpdateCourse(Course course)
+    {
+      var courseToUpdate = courses.First(x => x.CourseId == course.CourseId);
+      courseToUpdate.Code = course.Code;
+      courseToUpdate.CourseNum = course.CourseNum;
+      courseToUpdate.Name = course.Name;
+      courseToUpdate.Description = course.Description;
+
+    }
+
 }

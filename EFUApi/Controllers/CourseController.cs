@@ -38,9 +38,26 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public string UpdateCourse(int id)
+    [Course_ValidateCourseIdFilter]
+    [Course_ValidateUpdateCourseFilter]
+    public IActionResult UpdateCourse(int id, Course course)
     {
-        return $"Updating Course: {id}";
+        // if course is deleted after the line above but before update, then use try/catch block
+        try
+        {
+            CourseRepository.UpdateCourse(course);
+
+        }
+        catch
+        {
+            if (!CourseRepository.CourseExists(id))
+                return NotFound();
+
+            // if it fails for any other reason, throw generic 500 error
+            throw;
+        }
+
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
