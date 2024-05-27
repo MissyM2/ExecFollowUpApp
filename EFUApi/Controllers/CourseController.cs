@@ -1,4 +1,5 @@
 using System.Security.Permissions;
+using EFUApi.Filters;
 using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -26,13 +27,9 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPost]
+    [Course_ValidateCreateCourseFilter]
     public IActionResult CreateCourse([FromBody] Course course)
     {
-        if (course == null) return BadRequest();
-
-        var existingCourse = CourseRepository.GetCourseByProperties(course.Code, course.CourseNum, course.Name, course.Description);
-        if (existingCourse != null) return BadRequest();
-
         CourseRepository.AddCourse(course);
 
         return CreatedAtAction(nameof(GetCourseById),

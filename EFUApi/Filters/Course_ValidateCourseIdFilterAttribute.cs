@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace EFUApi;
+namespace EFUApi.Filters;
 
 public class Course_ValidateCourseIdFilterAttribute : ActionFilterAttribute
 {
