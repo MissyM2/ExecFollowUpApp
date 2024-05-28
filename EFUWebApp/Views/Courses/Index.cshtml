@@ -1,0 +1,25 @@
+@model List<Course>
+
+  <h3>Courses</h3>
+  <br/>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Code</td>
+        <td>Course Number</td>
+        <td>Name</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach(var course in Model)
+      {
+        <tr>
+          <td>@course.Code</td>
+          <td>@course.CourseNum</td>
+          <td>@course.Name</td>
+          <td>@course.Description</td>
+        </tr>
+      }
+    </tbody>
+  </table>
