@@ -1,3 +1,4 @@
+using EFUApi.Data;
 using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -5,6 +6,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace EFUApi.Filters.ActionFilters;
 public class Course_ValidateCreateCourseFilterAttribute : ActionFilterAttribute
 {
+  private readonly ApplicationDbContext db;
+
+  public Course_ValidateCreateCourseFilterAttribute(ApplicationDbContext db)
+  {
+    this.db = db;
+    
+  }
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         base.OnActionExecuting(context);
@@ -25,7 +33,11 @@ public class Course_ValidateCreateCourseFilterAttribute : ActionFilterAttribute
         // check to see if course already exists
         else
         {
-          var existingCourse = CourseRepository.GetCourseByProperties(course.Code, course.CourseNum, course.Name, course.Description);
+          var existingCourse = db.Courses.FirstOrDefault(x => 
+            !string.IsNullOrWhiteSpace(course.Code) &&
+            !string.IsNullOrWhiteSpace(x.Code) &&
+            x.Code.ToLower() == course.Code.ToLower());
+
           if (existingCourse != null)
           {
             context.ModelState.AddModelError("Course", "Course already exists.");

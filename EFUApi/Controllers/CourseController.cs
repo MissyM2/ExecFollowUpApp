@@ -38,10 +38,11 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPost]
-    [Course_ValidateCreateCourseFilter]
+    [TypeFilter(typeof(Course_ValidateCreateCourseFilterAttribute))]
     public IActionResult CreateCourse([FromBody] Course course)
     {
-        CourseRepository.AddCourse(course);
+        this.db.Courses.Add(course);
+        this.db.SaveChanges();
 
         return CreatedAtAction(nameof(GetCourseById),
             new {id = course.CourseId},
