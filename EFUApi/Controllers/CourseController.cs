@@ -1,3 +1,4 @@
+using EFUApi.Data;
 using EFUApi.Filters.ActionFilters;
 using EFUApi.Filters.ExceptionFilters;
 using EFUApi.Models.Repositories;
@@ -9,12 +10,17 @@ namespace EFUApi.Controllers;
 [Route("api/[controller]")]
 public class CoursesController : ControllerBase
 {
+    private readonly ApplicationDbContext db;
+    public CoursesController(ApplicationDbContext db)
+    {
+        this.db = db;
+    }
     
 
     [HttpGet]
     public IActionResult GetCourses()
     {
-        return Ok(CourseRepository.GetCourses());
+        return Ok(db.Courses.ToList());
     }
 
     [HttpGet("{id}")]
