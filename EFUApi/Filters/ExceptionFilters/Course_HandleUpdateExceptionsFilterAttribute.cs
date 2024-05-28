@@ -1,4 +1,5 @@
-﻿using EFUApi.Models.Repositories;
+﻿using EFUApi.Data;
+using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -6,6 +7,11 @@ namespace EFUApi.Filters.ExceptionFilters;
 
 public class Course_HandleUpdateExceptionsFilterAttribute: ExceptionFilterAttribute
 {
+  private readonly ApplicationDbContext db;
+  public Course_HandleUpdateExceptionsFilterAttribute(ApplicationDbContext db)
+  {
+    this.db = db;
+  }
     public override void OnException(ExceptionContext context)
     {
         base.OnException(context);
@@ -16,7 +22,7 @@ public class Course_HandleUpdateExceptionsFilterAttribute: ExceptionFilterAttrib
         // use TryParse to convert to int
         if (int.TryParse(strCourseId, out int courseId))
         {
-          if (!CourseRepository.CourseExists(courseId))
+          if (db.Courses.FirstOrDefault(x => x.CourseId == courseId) == null)
           {
             context.ModelState.AddModelError("CourseId", "Shirt doesn't exist anymore.");
             var problemDetails = new ValidationProblemDetails(context.ModelState)

@@ -52,10 +52,16 @@ public class CoursesController : ControllerBase
     [HttpPut("{id}")]
     [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
     [Course_ValidateUpdateCourseFilter]
-    [Course_HandleUpdateExceptionsFilter]
+    [TypeFilter(typeof(Course_HandleUpdateExceptionsFilterAttribute))]
     public IActionResult UpdateCourse(int id, Course course)
     {
-        CourseRepository.UpdateCourse(course);
+        var courseToUpdate = HttpContext.Items["course"] as Course;
+        courseToUpdate.Code = course.Code;
+        courseToUpdate.CourseNum = course.CourseNum;
+        courseToUpdate.Name = course.Name;
+        courseToUpdate.Description = course.Description;
+
+        db.SaveChanges();
         
         return NoContent();
     }
