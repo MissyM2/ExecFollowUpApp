@@ -24,11 +24,17 @@ public class CoursesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Course_ValidateCourseIdFilter]
+    // when using ApplicationDbContext, you have to use a filter in this way
+    [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
     public IActionResult GetCourseById(int id)
     {
+        // you have gotten the course, including the course id through the ValidateCourseIdFilter
+        // so, on line 51 of the filter, you have added the course to the HttpContext
+        // you can access the context to get the course rather than going to the db
+        // twice; you have access to the HttpContext through your Action Method
         
-        return Ok(CourseRepository.GetCourseById(id));
+        
+        return Ok(HttpContext.Items["course"]);
     }
 
     [HttpPost]
@@ -43,7 +49,7 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Course_ValidateCourseIdFilter]
+    [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
     [Course_ValidateUpdateCourseFilter]
     [Course_HandleUpdateExceptionsFilter]
     public IActionResult UpdateCourse(int id, Course course)
@@ -54,7 +60,7 @@ public class CoursesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Course_ValidateCourseIdFilter]
+    [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
     public IActionResult DeleteCourse(int id)
     {
         var course = CourseRepository.GetCourseById(id);
