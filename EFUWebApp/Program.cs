@@ -1,7 +1,16 @@
+using EFUWebApp;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient("EFUApi", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7165/api/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IWebApiExecutor, WebApiExecutor>();
 
 var app = builder.Build();
 
