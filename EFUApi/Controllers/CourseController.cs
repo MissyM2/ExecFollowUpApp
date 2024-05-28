@@ -70,12 +70,12 @@ public class CoursesController : ControllerBase
     [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
     public IActionResult DeleteCourse(int id)
     {
-        var course = CourseRepository.GetCourseById(id);
+        // need to retrieve the shirt
+       var courseToDelete = HttpContext.Items["course"] as Course;
 
-        // right now, this is a HARD DELETE (removed from in-memory data store); however, usually, 
-        // a programmer wants to mark for deletion.. a SOFT DELETE
-        CourseRepository.DeleteCourse(id);
+       db.Courses.Remove(courseToDelete);
+       db.SaveChanges();
 
-        return Ok(course);
+        return Ok(courseToDelete);
     }
 }
