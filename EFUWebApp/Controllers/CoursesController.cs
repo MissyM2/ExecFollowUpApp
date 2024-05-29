@@ -17,4 +17,15 @@ public class CoursesController : Controller
     return View(await webApiExecuter.InvokeGet<List<Course>>("courses"));
   }
 
+  public IActionResult CreateCourse()
+  {
+    return View();
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> CreateCourse(Course course)
+  {
+    return View(course);
+  }
+
 }
