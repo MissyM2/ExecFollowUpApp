@@ -10,7 +10,7 @@ builder.Services.AddHttpClient("EFUApi", client =>
 });
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IWebApiExecuter, WebApiExecuter>();
+builder.Services.AddTransient<IWebApiExecutor, WebApiExecutor>();
 
 var app = builder.Build();
 

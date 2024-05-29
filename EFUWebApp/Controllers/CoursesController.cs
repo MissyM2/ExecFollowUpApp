@@ -7,14 +7,14 @@ namespace EFUWebApp.Controllers;
 
 public class CoursesController : Controller
 {
-  private readonly IWebApiExecuter webApiExecuter;
-  public CoursesController(IWebApiExecuter webApiExecuter)
+  private readonly IWebApiExecutor webApiExecutor;
+  public CoursesController(IWebApiExecutor webApiExecutor)
   {
-    this.webApiExecuter = webApiExecuter;
+    this.webApiExecutor = webApiExecutor;
   }
   public async Task<IActionResult> Index()
   {
-    return View(await webApiExecuter.InvokeGet<List<Course>>("courses"));
+    return View(await webApiExecutor.InvokeGet<List<Course>>("courses"));
   }
 
   public IActionResult CreateCourse()
@@ -25,6 +25,17 @@ public class CoursesController : Controller
   [HttpPost]
   public async Task<IActionResult> CreateCourse(Course course)
   {
+
+    // in webApi, model can be validated BEFORE calling the method, but
+    // this isn't available in webApp.  We have to validate within the method
+    if (ModelState.IsValid)
+    {
+      var response = await webApiExecutor.InvokePost("courses", course);
+      if (response != null)
+      {
+        return RedirectToAction(nameof(Index));
+      }
+    }
     return View(course);
   }
 
