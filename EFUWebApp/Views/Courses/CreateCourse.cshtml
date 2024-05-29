@@ -3,12 +3,16 @@
 <h3>Course</h3>
 <br/>
 <form method="post" asp-action="CreateCourse">
+  <div class="text-danger" asp-validation-summary="ModelOnly"></div>
   <div class="mb-3 row">
     <div class="col-2">
       <label asp-for="Code" class="col-form-label"></label>
     </div>
     <div class="col-6">
       <input type="text" asp-for="Code" class="form-control"/>
+    </div>
+    <div class="col">
+      <span class="text-danger" asp-validation-for="Code"></span>
     </div>
   </div>
   <div class="mb-3 row">
@@ -18,6 +22,9 @@
     <div class="col-6">
       <input type="number" asp-for="CourseNum" class="form-control"  min="101"/>
     </div>
+     <div class="col">
+      <span class="text-danger" asp-validation-for="CourseNum"></span>
+    </div>
   </div>
   <div class="mb-3 row">
     <div class="col-2">
@@ -26,6 +33,9 @@
     <div class="col-6">
       <input type="text" asp-for="Name" class="form-control"/>
     </div>
+     <div class="col">
+      <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
   </div>
   <div class="mb-3 row">
     <div class="col-2">
@@ -33,6 +43,9 @@
     </div>
     <div class="col-6">
       <input type="text" asp-for="Description" class="form-control"/>
+    </div>
+     <div class="col">
+      <span class="text-danger" asp-validation-for="Description"></span>
     </div>
   </div>
   <div class="mb-3 row">
