@@ -1,6 +1,0 @@
-@EFUApi_HostAddress = http://localhost:5089
-
-GET {{EFUApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

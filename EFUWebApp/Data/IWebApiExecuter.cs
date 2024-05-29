@@ -1,6 +1,6 @@
 ﻿namespace EFUWebApp;
 
-public interface IWebApiExecutor
+public interface IWebApiExecuter
 {
   Task<T?> InvokeGet<T>(string relativeUrl);
 }

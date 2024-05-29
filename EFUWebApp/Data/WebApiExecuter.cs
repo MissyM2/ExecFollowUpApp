@@ -1,10 +1,10 @@
 ﻿namespace EFUWebApp;
 
-public class WebApiExecutor : IWebApiExecutor
+public class WebApiExecuter : IWebApiExecuter
 {
   private const string apiName = "EFUApi";
   private readonly IHttpClientFactory httpClientFactory;
-  public WebApiExecutor(IHttpClientFactory httpClientFactory)
+  public WebApiExecuter(IHttpClientFactory httpClientFactory)
   {
     this.httpClientFactory = httpClientFactory;
   }
