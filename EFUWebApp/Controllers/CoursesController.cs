@@ -39,4 +39,16 @@ public class CoursesController : Controller
     return View(course);
   }
 
+// you do not need an HTTP verb get because GET is the default
+  public async Task<IActionResult> UpdateCourse(int courseId)
+  {
+    var course = await webApiExecutor.InvokeGet<Course>($"courses/{courseId}");
+    if (course != null)
+    {
+      return View(course);
+    }
+
+    return NotFound();
+  }
+
 }
