@@ -51,4 +51,23 @@ public class CoursesController : Controller
     return NotFound();
   }
 
+  // This is NOT WebApi, this is Http Action Method so, although this is an update method
+  // we want to POST to this Action Method..  We keep the HttpPost decorator for the method.
+
+  [HttpPost]
+  public async Task<IActionResult> UpdateCourse(Course course)
+  {
+
+    // in webApi, model can be validated BEFORE calling the method, but
+    // this isn't available in webApp.  We have to validate within the method
+    if (ModelState.IsValid)
+    {
+
+      // string interpolation is used here.  The POST endpoint in the WebApi is expecting the id AND the course body
+      await webApiExecutor.InvokePut($"courses/{course.CourseId}", course);
+      return RedirectToAction(nameof(Index));
+    }
+    return View(course);
+  }
+
 }
