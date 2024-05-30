@@ -41,16 +41,7 @@ public class CoursesController : Controller
       }
       catch(WebApiException ex)
       {
-        if (ex.ErrorResponse != null &&
-            ex.ErrorResponse.Errors != null &&
-            ex.ErrorResponse.Errors.Count > 0)
-            {
-              foreach(var error in ex.ErrorResponse.Errors)
-              {
-                ModelState.AddModelError(error.Key, string.Join("; ", error.Value));
-              }
-            }
-
+       HandleWebApiException(ex); 
       }
       
     }
@@ -60,11 +51,21 @@ public class CoursesController : Controller
 // you do not need an HTTP verb get because GET is the default
   public async Task<IActionResult> UpdateCourse(int courseId)
   {
-    var course = await webApiExecutor.InvokeGet<Course>($"courses/{courseId}");
-    if (course != null)
+    try
     {
-      return View(course);
+      var course = await webApiExecutor.InvokeGet<Course>($"courses/{courseId}");
+      if (course != null)
+      {
+        return View(course);
+      }
+
     }
+    catch(WebApiException ex)
+    {
+      HandleWebApiException(ex);
+      return View();
+    }
+    
 
     return NotFound();
   }
@@ -80,10 +81,19 @@ public class CoursesController : Controller
     // this isn't available in webApp.  We have to validate within the method
     if (ModelState.IsValid)
     {
+      try
+      {
+          // string interpolation is used here.  The POST endpoint in the WebApi is expecting the id AND the course body
+          await webApiExecutor.InvokePut($"courses/{course.CourseId}", course);
+          return RedirectToAction(nameof(Index));
 
-      // string interpolation is used here.  The POST endpoint in the WebApi is expecting the id AND the course body
-      await webApiExecutor.InvokePut($"courses/{course.CourseId}", course);
-      return RedirectToAction(nameof(Index));
+      }
+      catch(WebApiException ex)
+      {
+        HandleWebApiException(ex);
+      }
+
+    
     }
     return View(course);
   }
@@ -92,6 +102,20 @@ public class CoursesController : Controller
   {
     await webApiExecutor.InvokeDelete($"courses/{courseId}");
     return RedirectToAction(nameof(Index));
+  }
+
+// LATER, create a Base Controller and put this method in it
+  private void HandleWebApiException(WebApiException ex)
+  {
+    if (ex.ErrorResponse != null &&
+            ex.ErrorResponse.Errors != null &&
+            ex.ErrorResponse.Errors.Count > 0)
+            {
+              foreach(var error in ex.ErrorResponse.Errors)
+              {
+                ModelState.AddModelError(error.Key, string.Join("; ", error.Value));
+              }
+            }
   }
 
 
