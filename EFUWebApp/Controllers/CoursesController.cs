@@ -30,11 +30,29 @@ public class CoursesController : Controller
     // this isn't available in webApp.  We have to validate within the method
     if (ModelState.IsValid)
     {
-      var response = await webApiExecutor.InvokePost("courses", course);
-      if (response != null)
+      // adding try/catch blocks to use our new WebApiExecutor exception handler
+      try
       {
-        return RedirectToAction(nameof(Index));
+        var response = await webApiExecutor.InvokePost("courses", course);
+        if (response != null)
+        {
+          return RedirectToAction(nameof(Index));
+        }
       }
+      catch(WebApiException ex)
+      {
+        if (ex.ErrorResponse != null &&
+            ex.ErrorResponse.Errors != null &&
+            ex.ErrorResponse.Errors.Count > 0)
+            {
+              foreach(var error in ex.ErrorResponse.Errors)
+              {
+                ModelState.AddModelError(error.Key, string.Join("; ", error.Value));
+              }
+            }
+
+      }
+      
     }
     return View(course);
   }

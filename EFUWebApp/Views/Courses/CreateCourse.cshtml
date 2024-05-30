@@ -3,7 +3,8 @@
 <h3>Course</h3>
 <br/>
 <form method="post" asp-action="CreateCourse">
-  <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+  <!-- changed asp-validation-summer to All from ModelOnly to show all errors -->
+  <div class="text-danger" asp-validation-summary="All"></div>
   <div class="mb-3 row">
     <div class="col-2">
       <label asp-for="Code" class="col-form-label"></label>
