@@ -70,4 +70,11 @@ public class CoursesController : Controller
     return View(course);
   }
 
+  public async Task<IActionResult> DeleteCourse(int courseId)
+  {
+    await webApiExecutor.InvokeDelete($"courses/{courseId}");
+    return RedirectToAction(nameof(Index));
+  }
+
+
 }

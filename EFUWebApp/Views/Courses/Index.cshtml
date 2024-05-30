@@ -21,6 +21,8 @@
           <td>@course.Name</td>
           <td>@course.Description</td>
           <td><a class="btn btn-link" asp-controller="courses" asp-action="updatecourse" asp-route-courseId="@course.CourseId">Edit</a> </td>
+          <td><a class="btn btn-link" asp-controller="courses" asp-action="deletecourse" asp-route-courseId="@course.CourseId">Delete</a> </td>
+
         </tr>
       }
     </tbody>
