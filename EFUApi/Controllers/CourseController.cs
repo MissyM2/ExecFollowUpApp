@@ -1,5 +1,6 @@
 using EFUApi.Data;
 using EFUApi.Filters.ActionFilters;
+using EFUApi.Filters.AuthFilters;
 using EFUApi.Filters.ExceptionFilters;
 using EFUApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace EFUApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[JwtTokenAuthFilter]
 public class CoursesController : ControllerBase
 {
     private readonly ApplicationDbContext db;
