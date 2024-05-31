@@ -100,8 +100,22 @@ public class CoursesController : Controller
 
   public async Task<IActionResult> DeleteCourse(int courseId)
   {
-    await webApiExecutor.InvokeDelete($"courses/{courseId}");
-    return RedirectToAction(nameof(Index));
+    try
+    {
+      await webApiExecutor.InvokeDelete($"courses/{courseId}");
+      return RedirectToAction(nameof(Index),
+          await webApiExecutor.InvokeGet<List<Course>>("courses"));
+
+    }
+    catch(WebApiException ex)
+    {
+      HandleWebApiException(ex);
+      // this is different.  We are going to lose the ModelState when we delete the course.
+      // In order to keep the ModelState and display the message, do this.
+      return View("Index");
+
+    }
+    
   }
 
 // LATER, create a Base Controller and put this method in it

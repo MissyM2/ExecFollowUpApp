@@ -1,31 +1,38 @@
 @model List<Course>
 
+  <div class="text-danger" asp-validation-summary="All"></div>
+
   <h3>Courses</h3>
   <br/>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <td>Code</td>
-        <td>Course Number</td>
-        <td>Name</td>
-        <td>Description</td>
-        <td></td>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach(var course in Model)
-      {
-        <tr>
-          <td>@course.Code</td>
-          <td>@course.CourseNum</td>
-          <td>@course.Name</td>
-          <td>@course.Description</td>
-          <td><a class="btn btn-link" asp-controller="courses" asp-action="updatecourse" asp-route-courseId="@course.CourseId">Edit</a> </td>
-          <td><a class="btn btn-link" asp-controller="courses" asp-action="deletecourse" asp-route-courseId="@course.CourseId">Delete</a> </td>
 
+   <!-- what if Model is null?  If you have deleted the last one.  There will be an exception.  Handle it here -->
+  @if (Model != null)
+  {
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Code</td>
+          <td>Course Number</td>
+          <td>Name</td>
+          <td>Description</td>
+          <td></td>
         </tr>
-      }
+      </thead>
+      <tbody>
+        @foreach(var course in Model)
+        {
+          <tr>
+            <td>@course.Code</td>
+            <td>@course.CourseNum</td>
+            <td>@course.Name</td>
+            <td>@course.Description</td>
+            <td><a class="btn btn-link" asp-controller="courses" asp-action="updatecourse" asp-route-courseId="@course.CourseId">Edit</a> </td>
+            <td><a class="btn btn-link" asp-controller="courses" asp-action="deletecourse" asp-route-courseId="@course.CourseId">Delete</a> </td>
+
+          </tr>
+        }
     </tbody>
   </table>
+  }
   <br />
   <a class="btn btn-primary" asp-controller="courses" asp-action="createcourse">Create</a>
