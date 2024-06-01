@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Collections.Immutable;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +49,11 @@ public static class Authenticator
   public static bool VerifyToken(string token, string strSecretKey)
   {
     if (!string.IsNullOrWhiteSpace(token)) return false;
+
+    if (token.StartsWith("Bearer"))
+    {
+      token = token.Substring(6).Trim();
+    }
 
     var secretKey = Encoding.ASCII.GetBytes(strSecretKey);
 

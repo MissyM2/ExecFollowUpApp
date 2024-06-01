@@ -3,9 +3,17 @@ using EFUWebApp;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// this is an endpoint factory
 builder.Services.AddHttpClient("EFUApi", client =>
 {
     client.BaseAddress = new Uri("http://localhost:5089/api/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+// another endpoint factory
+builder.Services.AddHttpClient("AuthorityApi", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5089/");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 builder.Services.AddControllersWithViews();
