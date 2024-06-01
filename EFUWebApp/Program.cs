@@ -16,6 +16,15 @@ builder.Services.AddHttpClient("AuthorityApi", client =>
     client.BaseAddress = new Uri("http://localhost:5089/");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.IdleTimeout = TimeSpan.FromHours(5);
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddHttpContextAccessor(); // we need HttpContext in the WeApiExecutor.cs but, because it is a custom class, you cannot access it directly.  So we inject this.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IWebApiExecutor, WebApiExecutor>();
@@ -36,6 +45,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession(); // to save token
 
 app.MapControllerRoute(
     name: "default",

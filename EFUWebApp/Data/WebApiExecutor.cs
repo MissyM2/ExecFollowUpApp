@@ -10,12 +10,15 @@ public class WebApiExecutor : IWebApiExecutor
   private const string authApiName = "AuthorityApi";
   private readonly IHttpClientFactory httpClientFactory;
   private readonly IConfiguration configuration;
+  private readonly IHttpContextAccessor httpContextAccessor;
   public WebApiExecutor(
     IHttpClientFactory httpClientFactory, 
-    IConfiguration configuration)
+    IConfiguration configuration,
+    IHttpContextAccessor httpContextAccessor)
   {
     this.httpClientFactory = httpClientFactory;
     this.configuration = configuration;
+    this.httpContextAccessor = httpContextAccessor;
   }
 
   public async Task<T?> InvokeGet<T>(string relativeUrl)
@@ -78,29 +81,39 @@ public class WebApiExecutor : IWebApiExecutor
 
   private async Task AddJwtToHeader(HttpClient httpClient)
   {
-    var clientId = configuration.GetValue<string>("ClientId");
-    var secret = configuration.GetValue<string>("secret");
-
-    // Authenticate against the Authority (need AppCredential class - copied the same class from EFUApi into EFUWebApp)
-    var authoClient = httpClientFactory.CreateClient(authApiName);
-    var response = await authoClient.PostAsJsonAsync("auth", new AppCredential
+    JwtToken? token = null;
+    string? strToken = httpContextAccessor.HttpContext?.Session.GetString("access_token");
+    if (!string.IsNullOrWhiteSpace(strToken))
     {
-      ClientId = clientId,
-      Secret=secret
+      token = JsonConvert.DeserializeObject<JwtToken>(strToken);
+    }
 
-    });
+    if (token == null)
+    {
+      var clientId = configuration.GetValue<string>("ClientId");
+      var secret = configuration.GetValue<string>("secret");
 
-    response.EnsureSuccessStatusCode();
+      // Authenticate against the Authority (need AppCredential class - copied the same class from EFUApi into EFUWebApp)
+      var authoClient = httpClientFactory.CreateClient(authApiName);
+      var response = await authoClient.PostAsJsonAsync("auth", new AppCredential
+      {
+        ClientId = clientId,
+        Secret=secret
 
-    // Get the JWT from the Authority (need a class that represents the JWT that is returned (access_token and expires_at properties))
-    // we currently have the AppCredential class in the EFUApi project.  We need a class that corresponds to that in the EFUWebApp
-    string strToken = await response.Content.ReadAsStringAsync();
-    var token = JsonConvert.DeserializeObject<JwtToken>(strToken);
+      });
 
-    //  Pass the JWT to endpoints through the http headers
-    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token?.AccessToken);
+      response.EnsureSuccessStatusCode();
 
+      // Get the JWT from the Authority (need a class that represents the JWT that is returned (access_token and expires_at properties))
+      // we currently have the AppCredential class in the EFUApi project.  We need a class that corresponds to that in the EFUWebApp
+      strToken = await response.Content.ReadAsStringAsync();
+      token = JsonConvert.DeserializeObject<JwtToken>(strToken);
 
+      httpContextAccessor.HttpContext?.Session.SetString("access_token", strToken);
+    }
+          //  Pass the JWT to endpoints through the http headers
+      httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token?.AccessToken);
+    
   }
 
 }
