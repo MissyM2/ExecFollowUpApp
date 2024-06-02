@@ -23,7 +23,7 @@ public class AuthorityController : ControllerBase
   {
     if (Authenticator.Authenticate(credential.ClientId, credential.Secret))
     {
-      var expiresAt = DateTime.UtcNow.AddMinutes(10);
+      var expiresAt = DateTime.UtcNow.AddMinutes(1);
 
       return Ok(new
       {
