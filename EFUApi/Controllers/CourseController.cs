@@ -20,6 +20,9 @@ public class CoursesController : ControllerBase
     
 
     [HttpGet]
+
+    // doing this manually.  Should implement Asp .Net Core Identity Framework
+    [RequiredClaim("read", "true")]
     public IActionResult GetCourses()
     {
         return Ok(db.Courses.ToList());
@@ -28,6 +31,8 @@ public class CoursesController : ControllerBase
     [HttpGet("{id}")]
     // when using ApplicationDbContext, you have to use a filter in this way
     [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
+     // doing this manually.  Should implement Asp .Net Core Identity Framework
+    [RequiredClaim("read", "true")]
     public IActionResult GetCourseById(int id)
     {
         // you have gotten the course, including the course id through the ValidateCourseIdFilter
@@ -41,6 +46,8 @@ public class CoursesController : ControllerBase
 
     [HttpPost]
     [TypeFilter(typeof(Course_ValidateCreateCourseFilterAttribute))]
+     // doing this manually.  Should implement Asp .Net Core Identity Framework
+    [RequiredClaim("write", "true")]
     public IActionResult CreateCourse([FromBody] Course course)
     {
         this.db.Courses.Add(course);
@@ -55,6 +62,8 @@ public class CoursesController : ControllerBase
     [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
     [Course_ValidateUpdateCourseFilter]
     [TypeFilter(typeof(Course_HandleUpdateExceptionsFilterAttribute))]
+     // doing this manually.  Should implement Asp .Net Core Identity Framework
+    [RequiredClaim("write", "true")]
     public IActionResult UpdateCourse(int id, Course course)
     {
         var courseToUpdate = HttpContext.Items["course"] as Course;
@@ -70,6 +79,8 @@ public class CoursesController : ControllerBase
 
     [HttpDelete("{id}")]
     [TypeFilter(typeof(Course_ValidateCourseIdFilterAttribute))]
+     // doing this manually.  Should implement Asp .Net Core Identity Framework
+    [RequiredClaim("delete", "true")]    
     public IActionResult DeleteCourse(int id)
     {
         // need to retrieve the shirt
