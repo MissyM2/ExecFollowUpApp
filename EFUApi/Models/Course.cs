@@ -12,10 +12,17 @@ public class Course
 
         public int? CourseNum {get; set;}
 
+        public string? Instructor { get; set;}  // added for the purpose of learning versioning
+
         [Required]
         public string? Name { get; set; }
         
         public string? Description { get; set; }
+
+        public bool ValidateDescription()
+        {
+            return !string.IsNullOrEmpty(Description);
+        }
 
 
 
