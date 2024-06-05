@@ -13,6 +13,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddApiVersioning(options =>
+{
+  options.AssumeDefaultVersionWhenUnspecified= true;
+  options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1,0);
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 // in order to add authorization header so we can access the db from swagger

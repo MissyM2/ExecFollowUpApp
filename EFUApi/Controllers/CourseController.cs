@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EFUApi.Controllers;
 
+[ApiVersion("1.0")]
 [ApiController]
 [Route("api/[controller]")]
 [JwtTokenAuthFilter]

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EFUApi.Controllers;
 
+[ApiVersion("1.0")]
 [ApiController]
 public class AuthorityController : ControllerBase
 {
