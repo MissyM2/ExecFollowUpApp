@@ -7,7 +7,7 @@ public class Course_EnsureInstructorIsPresentFilterAttribute : ActionFilterAttri
 {
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        base.OnActionExecuting(context)
+        base.OnActionExecuting(context);
         {
           base.OnActionExecuting(context);
 
