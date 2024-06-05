@@ -19,9 +19,9 @@ public class Course
         
         public string? Description { get; set; }
 
-        public bool ValidateDescription()
+        public bool ValidateInstructor()
         {
-            return !string.IsNullOrEmpty(Description);
+            return !string.IsNullOrEmpty(Instructor);
         }
 
 

@@ -1,5 +1,6 @@
 using EFUApi.Data;
 using EFUApi.Filters.OperationFilter;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -18,6 +19,7 @@ builder.Services.AddApiVersioning(options =>
 {
   options.AssumeDefaultVersionWhenUnspecified= true;
   options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1,0);
+  options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
