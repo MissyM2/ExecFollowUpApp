@@ -10,7 +10,7 @@ namespace EFUApi.Controllers.V2;
 
 [ApiVersion("2.0")]
 [ApiController]
-[Route("api/v{v:apiVersion}/[controller]")]
+[Route("api/[controller]")]
 [JwtTokenAuthFilter]
 public class CoursesController : ControllerBase
 {
