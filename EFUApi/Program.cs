@@ -23,7 +23,7 @@ builder.Services.AddApiVersioning(options =>
   //options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 // in order to add authorization header so we can access the db from swagger
 builder.Services.AddSwaggerGen(c =>
 {
@@ -44,7 +44,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI( 
+      options =>
+      {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1");
+
+      });
 }
 
 app.UseHttpsRedirection();
