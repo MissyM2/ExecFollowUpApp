@@ -73,6 +73,7 @@ public class CoursesController : ControllerBase
         var courseToUpdate = HttpContext.Items["course"] as Course;
         courseToUpdate.Code = course.Code;
         courseToUpdate.CourseNum = course.CourseNum;
+        courseToUpdate.Instructor = course.Instructor;
         courseToUpdate.Name = course.Name;
         courseToUpdate.Description = course.Description;
 
